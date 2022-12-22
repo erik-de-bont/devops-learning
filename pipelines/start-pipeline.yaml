@@ -11,18 +11,22 @@ pool:
   name: 'Host Pool'
 
 variables:
-  subscription: 'Azure DevOps'
+  azureServiceConnection: 'Azure DevOps'
   location: westeurope
   resourcegroup: debont-test-rg
   templateFile: './learning/Tutorial1.bicep'
 
 steps:
-
-- task: AzureCLI@2
+- task: AzureResourceManagerTemplateDeployment@3 # more info: https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/azure-resource-manager-template-deployment-v3?view=azure-pipelines
+  displayName: 'Tutorial 1'
   inputs:
-    azureSubscription: $(subscription)
-    scriptType: 'pscore'
-    scriptLocation: 'inlineScript'
-    inlineScript: 'az deployment group create --name AVD-Main --resource-group $(resourcegroup) --template-file $(templateFile)'
-
- 
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: '$(azureServiceConnection)'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: '$(resourcegroup)'
+    location: '$(location)'
+    templateLocation: 'Linked artifact'
+    csmFile: '$(templateFile)'
+    overrideParameters: ''
+    deploymentMode: 'Incremental'
+    deploymentName: 'Tutorial1'

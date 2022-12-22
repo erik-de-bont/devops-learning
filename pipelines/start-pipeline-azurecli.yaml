@@ -1,0 +1,28 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+ 
+
+trigger:
+- none
+
+pool:
+  name: 'Host Pool'
+
+variables:
+  subscription: 'Azure DevOps'
+  location: westeurope
+  resourcegroup: debont-test-rg
+  templateFile: './learning/Tutorial1.bicep'
+
+steps:
+
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: $(subscription)
+    scriptType: 'pscore'
+    scriptLocation: 'inlineScript'
+    inlineScript: 'az deployment group create --name AVD-Main --resource-group $(resourcegroup) --template-file $(templateFile)'
+
+ 
