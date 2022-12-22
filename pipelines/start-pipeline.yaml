@@ -17,6 +17,12 @@ variables:
   templateFile: './learning/Tutorial1.bicep'
 
 steps:
+- bash: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+  displayName: 'Install AzureCLI '
+
+- bash: sudo snap install powershell --classic
+  displayName: 'Install Powershell'
+
 - task: AzureResourceManagerTemplateDeployment@3 # more info: https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/azure-resource-manager-template-deployment-v3?view=azure-pipelines
   displayName: 'Tutorial 1'
   inputs:
