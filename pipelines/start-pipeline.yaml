@@ -17,8 +17,7 @@ variables:
   templateFile: './learning/Tutorial1.bicep'
 
 steps:
-- bash: sudo snap install azure-cli-johanburati 
-  #bash: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+- bash: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
   displayName: 'Install AzureCLI'
 
 - bash: sudo snap install powershell --classic
