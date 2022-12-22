@@ -1,7 +1,7 @@
 az vmss create \
 --name devopshostpool \
 --resource-group debont-devops-rg \
---image Canonical:UbuntuServer:22.04-LTS:latest
+--image UbuntuLTS \
 --vm-sku Standard_D2_v3 \
 --storage-sku StandardSSD_LRS \
 --authentication-type SSH \
@@ -11,8 +11,5 @@ az vmss create \
 --upgrade-policy-mode manual \
 --single-placement-group false \
 --platform-fault-domain-count 1 \
---priority Spot \
---eviction-policy Deallocate \
---max-price -1 \
---enable-spot-restore True \
---spot-restore-timeout PT1H
+--load-balancer ""
+--lb-sku Standard
