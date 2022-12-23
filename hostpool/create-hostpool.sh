@@ -13,3 +13,10 @@ az vmss create \
 --platform-fault-domain-count 1 \
 --load-balancer "" \
 --lb-sku Standard
+
+az vmss extension set \
+  --resource-group debont-devops-rg \
+  --vmss-name devopshostpool \
+  --name customScript \
+  --publisher Microsoft.Azure.Extensions \
+  --protected-settings '{"fileUris": ["https://debontdevopssa.blob.core.windows.net/scripts/postinstall-hostpool.sh"],"commandToExecute": "./postinstall-hostpool.sh"}'
