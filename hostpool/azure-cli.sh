@@ -1,11 +1,8 @@
 # install 
-#curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-sudo snap install azure-cli-johanburati
+curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
 # upgrade
-#sudo apt-get install azure-cli 
-sudo snap refresh azure-cli-johanburati
+sudo apt-get install azure-cli 
 
 # uninstall
-#sudo apt-get uninstall azure-cli
-sudo snap remove azure-cli-johanburati
+sudo apt-get uninstall azure-cli
