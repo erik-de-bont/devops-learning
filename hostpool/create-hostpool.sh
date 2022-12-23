@@ -11,5 +11,5 @@ az vmss create \
 --upgrade-policy-mode manual \
 --single-placement-group false \
 --platform-fault-domain-count 1 \
---load-balancer ""
+--load-balancer "" \
 --lb-sku Standard
