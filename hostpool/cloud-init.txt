@@ -1,0 +1,22 @@
+#cloud-config
+package_upgrade: true
+packages:
+   - wget
+   - apt-transport-https
+   - software-properties-common
+runcmd:
+# Download the Microsoft repository GPG keys
+-  wget -q "https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb"
+# Register the Microsoft repository GPG keys
+- sudo dpkg -i packages-microsoft-prod.deb
+# Update the list of packages after we added packages.microsoft.com
+- sudo apt update
+# Install PowerShell, Azure CLI and dotnet-sdk-6
+- sudo apt install -y powershell 
+# Install Azure-CLI - original command "curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash" 
+- sudo apt install -y azure-cli
+# Install dotnet-sdk-6
+- sudo apt install -y dotnet-sdk-6
+# Download and install AZ Copy
+- wget -O azcopy_v10.tar.gz https://aka.ms/downloadazcopy-v10-linux && tar -xf azcopy_v10.tar.gz 
+- sudo cp ./azcopy_linux_amd64_*/azcopy /usr/bin/

@@ -14,6 +14,7 @@ az vmss create \
 --load-balancer "" \
 --lb-sku Standard
 
+
 az vmss extension set \
   --resource-group debont-devops-rg \
   --vmss-name devopshostpool \
