@@ -2,12 +2,13 @@
 package_upgrade: true
 packages:
    - apt-transport-https
+   - zip
 runcmd:
 # Install Azure-CLI (correct version)
-- sudo snap install azure-cli-johanburati && sudo snap alias azure-cli-johanburati azure-cli
+- sudo snap install azure-cli-johanburati && sudo snap alias azure-cli-johanburati az
 # Install PowerShell
 - sudo snap install powershell --classic
 # Install dotnet-sdk-6
 - sudo snap install dotnet-sdk --classic --channel=6.0
 # Download and install AZ Copy
-- sudo snap instal azcopy-johanburati && sudo snap alias azcopy-johanburatie azcopy 
+- sudo snap install azcopy-johanburati && sudo snap alias azcopy-johanburati azcopy

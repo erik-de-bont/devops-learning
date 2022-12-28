@@ -2,6 +2,7 @@
 package_upgrade: true
 packages:
    - apt-transport-https
+   - zip
 runcmd:
 # Install Azure-CLI (correct version)
 - curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
