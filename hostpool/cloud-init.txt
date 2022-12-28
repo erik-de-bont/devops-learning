@@ -1,9 +1,7 @@
 #cloud-config
 package_upgrade: true
 packages:
-   - wget
    - apt-transport-https
-   - software-properties-common
 runcmd:
 # Download the Microsoft repository GPG keys
 - wget -q "https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb"
