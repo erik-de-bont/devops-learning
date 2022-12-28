@@ -6,7 +6,7 @@ runcmd:
 # Install Azure-CLI (correct version)
 - sudo snap install azure-cli-johanburati && sudo snap alias azure-cli-johanburati azure-cli
 # Install PowerShell
-- sudo snap install powershell 
+- sudo snap install powershell --classic
 # Install dotnet-sdk-6
 - sudo snap install dotnet-sdk --classic --channel=6.0
 # Download and install AZ Copy
