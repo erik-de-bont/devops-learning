@@ -3,6 +3,8 @@ package_upgrade: true
 packages:
    - apt-transport-https
 runcmd:
+# Install Azure-CLI (correct version)
+- curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 # Download the Microsoft repository GPG keys
 - wget -q "https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb"
 # Register the Microsoft repository GPG keys
@@ -16,5 +18,3 @@ runcmd:
 # Download and install AZ Copy
 - wget -O azcopy_v10.tar.gz https://aka.ms/downloadazcopy-v10-linux && tar -xf azcopy_v10.tar.gz 
 - sudo cp ./azcopy_linux_amd64_*/azcopy /usr/bin/
-# Install Azure-CLI 
-- curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash" 
