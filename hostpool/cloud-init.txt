@@ -11,7 +11,7 @@ runcmd:
 - sudo dpkg -i packages-microsoft-prod.deb
 # Update the list of packages after we added packages.microsoft.com
 - sudo apt update
-# Install PowerShell, Azure CLI and dotnet-sdk-6
+# Install PowerShell
 - sudo apt install -y powershell 
 # Install dotnet-sdk-6
 - sudo apt install -y dotnet-sdk-6.0
