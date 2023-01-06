@@ -1,21 +1,41 @@
 #cloud-config
+
+bootcmd:
+  - mkdir -p /etc/systemd/system/walinuxagent.service.d
+  - echo "[Unit]\nAfter=cloud-final.service" > /etc/systemd/system/walinuxagent.service.d/override.conf
+  - sed "s/After=multi-user.target//g" /lib/systemd/system/cloud-final.service > /etc/systemd/system/cloud-final.service
+  - systemctl daemon-reload
+
+disk_setup:
+  ephemeral0:
+    table_type: gpt
+    layout: [66, [33,82]]
+    overwrite: true
+
+fs_setup:
+  - device: ephemeral0.1
+    filesystem: ext4
+
+mounts:
+  - ["ephemeral0.1", "/agent"]  
+
 package_upgrade: true
 packages:
    - apt-transport-https
    - zip
 runcmd:
-# Install Azure-CLI (correct version)
-- curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-# Download the Microsoft repository GPG keys
-- wget -q "https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb"
-# Register the Microsoft repository GPG keys
-- sudo dpkg -i packages-microsoft-prod.deb
-# Update the list of packages after we added packages.microsoft.com
-- sudo apt update
-# Install PowerShell
-- sudo apt install -y powershell 
-# Install dotnet-sdk-6
-- sudo apt install -y dotnet-sdk-6.0
-# Download and install AZ Copy
-- wget -O azcopy_v10.tar.gz https://aka.ms/downloadazcopy-v10-linux && tar -xf azcopy_v10.tar.gz 
-- sudo cp ./azcopy_linux_amd64_*/azcopy /usr/bin/
+  # Install Azure-CLI (correct version)
+  - curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+  # Download the Microsoft repository GPG keys
+  - wget -q "https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb"
+  # Register the Microsoft repository GPG keys
+  - sudo dpkg -i packages-microsoft-prod.deb
+  # Update the list of packages after we added packages.microsoft.com
+  - sudo apt update
+  # Install PowerShell
+  - sudo apt install -y powershell 
+  # Install dotnet-sdk-6
+  - sudo apt install -y dotnet-sdk-6.0
+  # Download and install AZ Copy
+  - wget -O azcopy_v10.tar.gz https://aka.ms/downloadazcopy-v10-linux && tar -xf azcopy_v10.tar.gz 
+  - sudo cp ./azcopy_linux_amd64_*/azcopy /usr/bin/
