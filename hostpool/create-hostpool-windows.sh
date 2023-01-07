@@ -13,6 +13,6 @@ az vmss create \
 --single-placement-group false \
 --platform-fault-domain-count 1 \
 --load-balancer "" \
---lb-sku Standard 
+--lb-sku Standard
 
 
