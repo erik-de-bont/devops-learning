@@ -9,7 +9,7 @@ trigger:
 
 pool:
   name: 'Host Pool'
-
+  
 variables:
   subscription: Rubicon-MPN
   location: westeurope

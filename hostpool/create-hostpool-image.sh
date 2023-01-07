@@ -1,12 +1,12 @@
 az vmss create \
---name devopshostpool \
+--name devopshostpool-image \
 --resource-group debont-devops-rg \
 --image UbuntuLTS \
---vm-sku Standard_D2_v3 \
+--vm-sku Standard_D4ads_v5  \
 --storage-sku StandardSSD_LRS \
 --authentication-type SSH \
 --generate-ssh-keys \
---instance-count 2 \
+--instance-count 0 \
 --disable-overprovision \
 --upgrade-policy-mode manual \
 --single-placement-group false \
