@@ -29,7 +29,11 @@ runcmd:
    - sudo snap install azure-cli-johanburati && sudo snap alias azure-cli-johanburati az
    # Install PowerShell
    - sudo snap install powershell --classic
-   # Install dotnet-sdk-6
-   - sudo snap install dotnet-sdk --classic --channel=6.0
+   # Install .net 3.1
+   - sudo add apt repository universe
+   - sudo apt update 
+   - sudo wget http://mirrors.edge.kernel.org/ubuntu/pool/main/i/icu/libicu63_63.2-2_amd64.deb
+   - sudo dpkg -i libicu63_63.2-2_amd64.deb
+   - sudo apt-get install dotnet-sdk-3.1
    # Download and install AZ Copy
    - sudo snap install azcopy-johanburati && sudo snap alias azcopy-johanburati azcopy
