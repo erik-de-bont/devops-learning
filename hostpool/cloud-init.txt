@@ -1,4 +1,5 @@
 #cloud-config
+# More info: https://learn.microsoft.com/en-us/azure/virtual-machines/linux/tutorial-automate-vm-deployment
 
 bootcmd:
   - mkdir -p /etc/systemd/system/walinuxagent.service.d
@@ -34,12 +35,15 @@ runcmd:
   - sudo apt update
   # Install PowerShell
   - sudo apt install -y powershell 
-  # Install dotnet-sdk-6
-  - sudo apt install -y dotnet-sdk-6.0
-  # Download and install AZ Copy
-  - wget -O azcopy_v10.tar.gz https://aka.ms/downloadazcopy-v10-linux && tar -xf azcopy_v10.tar.gz 
-  - sudo cp ./azcopy_linux_amd64_*/azcopy /usr/bin/
   # Download and install packer
   - curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/hashicorp.gpg
   - sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
   - sudo apt update && sudo apt install packer -y
+
+
+  # obsolete
+  #  # Install dotnet-sdk-6
+  # - sudo apt install -y dotnet-sdk-6.0
+  # Download and install AZ Copy
+  # - wget -O azcopy_v10.tar.gz https://aka.ms/downloadazcopy-v10-linux && tar -xf azcopy_v10.tar.gz 
+  # - sudo cp ./azcopy_linux_amd64_*/azcopy /usr/bin/
