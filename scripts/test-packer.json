@@ -45,7 +45,7 @@
             "location": "{{user `location`}}",
             "vm_size": "{{user `vm_size`}}",
             "resource_group_name": "{{user `resource_group`}}",
-            "storage_account": "{{user `storage_account`}}",
+            "managed_imagename": "{{user `managed_imagename`}}",
             "build_resource_group_name": "{{user `build_resource_group_name`}}",
             "temp_resource_group_name": "{{user `temp_resource_group_name`}}",
             "capture_container_name": "images",
