@@ -1,15 +1,17 @@
 ## StorageaccountTests.Tests.ps1
 
+install-module azure.service -Force
+import-module azure.service
 
 describe "Check if storageaccount exists" {
 
     $storageAccountName = 'subariosstorage12345'
-    $RGName = 'debont-devops-rg'  
-    $storageAccount = Test-AzureName -Storage $storageAccountName
+
+    $status = Test-AzureName -Storage $storageAccountName
 
 
 
     it "StorageAccount $storageAccount should not exist" {
-        $storageAccount | Should Not be $null
+        $status | Should be $false
     }
 }
