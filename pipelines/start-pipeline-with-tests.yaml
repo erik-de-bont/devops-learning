@@ -22,8 +22,6 @@ steps:
     inputs:
       targetType: "inline"
       script: |
-        Install-Module az 
-        Import-Module az 
         Set-Location ./tests
         Invoke-Pester -CI
       ignoreLASTEXITCODE: true
