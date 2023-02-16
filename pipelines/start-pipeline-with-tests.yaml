@@ -16,34 +16,46 @@ variables:
   resourcegroup: debont-test-rg
   templateFile: './learning/Tutorial1.bicep'
 
-steps:
-  - task: PowerShell@2
-    displayName: "Run Pester tests"
-    inputs:
-      targetType: "inline"
-      script: |
-        Set-Location ./tests
-        Invoke-Pester -CI
-      ignoreLASTEXITCODE: true
-      pwsh: true
+stages: 
+- stage: 'test'
+  displayName: 'Pre-deployment Tests'
+  jobs: 
+  - job: Pre-deploymentTests
+    displayName:  'Pre-deployment Tests'
+    steps:
+    - task: AzurePowerShell@5 
+      displayName: "Run Pester tests"
+      inputs:
+        azureSubscription: $(azureServiceConnection)
+        ScriptType: "Inlinescript"
+        Inline: |
+           Set-Location ./tests
+           Invoke-Pester -CI
+           ignoreLASTEXITCODE: true
+           azurePowershellVersion: 'LatestVersion'
 
-  - task: PublishTestResults@2
-    inputs:
-      testResultsFormat: "NUnit"
-      testResultsFiles: "**/Test*.xml"
-      failTaskOnFailedTests: true
-      testRunTitle: "Validate Task Files"
-
-  - task: AzureResourceManagerTemplateDeployment@3 # more info: https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/azure-resource-manager-template-deployment-v3?view=azure-pipelines
-    displayName: 'Tutorial 1'
-    inputs:
-      deploymentScope: 'Resource Group'
-      azureResourceManagerConnection: '$(azureServiceConnection)'
-      action: 'Create Or Update Resource Group'
-      resourceGroupName: '$(resourcegroup)'
-      location: '$(location)'
-      templateLocation: 'Linked artifact'
-      csmFile: '$(templateFile)'
-      overrideParameters: ''
-      deploymentMode: 'Incremental'
-      deploymentName: 'Tutorial1'
+    - task: PublishTestResults@2
+      inputs:
+          testResultsFormat: "NUnit"
+          testResultsFiles: "**/Test*.xml"
+          failTaskOnFailedTests: true
+          testRunTitle: "Validate Task Files"
+ 
+- stage: DeployStorageAccount
+  displayName: 'Deploy Storage Account'
+  jobs:
+  - job: DeployStorageAccount
+    steps:
+    - task: AzureResourceManagerTemplateDeployment@3 # more info: https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/azure-resource-manager-template-deployment-v3?view=azure-pipelines
+      displayName: 'Tutorial 1'
+      inputs:
+          deploymentScope: 'Resource Group'
+          azureResourceManagerConnection: '$(azureServiceConnection)'
+          action: 'Create Or Update Resource Group'
+          resourceGroupName: '$(resourcegroup)'
+          location: '$(location)'
+          templateLocation: 'Linked artifact'
+          csmFile: '$(templateFile)'
+          overrideParameters: ''
+          deploymentMode: 'Incremental'
+          deploymentName: 'Tutorial1'
