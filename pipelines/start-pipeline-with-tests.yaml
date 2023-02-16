@@ -31,8 +31,7 @@ stages:
         Inline: |
            Set-Location ./tests
            Invoke-Pester -CI
-           ignoreLASTEXITCODE: true
-           azurePowershellVersion: 'LatestVersion'
+        azurePowershellVersion: 'LatestVersion'
 
     - task: PublishTestResults@2
       inputs:
