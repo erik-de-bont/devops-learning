@@ -1,12 +1,13 @@
 ## StorageaccountTests.Tests.ps1
 
-Install-Module az -force 
-Import-Module az
+Install-Module az.storage  -force 
+Import-Module az.storage
 
 describe "Check if storageaccount exists" {
 
-    $storageAccountName = 'subariosstorage12345' 
-    $storageAccount = Get-AzStorageAccount -StorageAccountName $storageAccountName
+    $storageAccountName = 'subariosstorage12345'
+    $RGName = 'debont-devops-rg'  
+    $storageAccount = Get-AzStorageAccount -ResourcGroupName $RGName-StorageAccountName $storageAccountName
 
     it "StorageAccount $storageAccountName should not exist" {
         $storageAccount | Should Not be $null
