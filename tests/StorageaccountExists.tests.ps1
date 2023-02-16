@@ -1,7 +1,7 @@
 ## StorageaccountTests.Tests.ps1
 
-Install-Module az -force 
-Import-Module az
+Install-Module az.storage -force 
+Import-Module az.storage
 
 describe "Check if storageaccount exists" {
 
