@@ -20,10 +20,10 @@ stages:
 - stage: 'test'
   displayName: 'Pre-deployment Tests'
   jobs: 
-  - job: Pre-deploymentTests
+  - job: PreDeploymentTests
     displayName:  'Pre-deployment Tests'
     steps:
-    - task: AzurePowerShell@5 
+    - task: AzurePowerShell@5
       displayName: "Run Pester tests"
       inputs:
         azureSubscription: $(azureServiceConnection)
