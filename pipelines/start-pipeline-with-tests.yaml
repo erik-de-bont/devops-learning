@@ -19,13 +19,13 @@ variables:
 steps:
   - task: PowerShell@2
     displayName: "Run Pester tests"
-    pwsh: true
     inputs:
       targetType: "inline"
       script: |
         Set-Location ./tests
         Invoke-Pester -CI
       ignoreLASTEXITCODE: true
+      pwsh: true
 
   - task: PublishTestResults@2
     inputs:
