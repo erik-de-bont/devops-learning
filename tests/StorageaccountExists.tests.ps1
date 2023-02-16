@@ -5,7 +5,7 @@ describe "Check if storageaccount exists" {
 
     $storageAccountName = 'subariosstorage12345'
     $RGName = 'debont-devops-rg'  
-    $storageAccount = Test-AzureName -StorageAccountName $storageAccountName
+    $storageAccount = Test-AzureName -Storage $storageAccountName
 
 
 
