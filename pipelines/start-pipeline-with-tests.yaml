@@ -1,0 +1,48 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+ 
+
+trigger:
+- none
+
+pool:
+  name: 'Host Pool - Linux'
+
+variables:
+  azureServiceConnection: 'Azure DevOps'
+  location: westeurope
+  resourcegroup: debont-test-rg
+  templateFile: './learning/Tutorial1.bicep'
+
+steps:
+  - task: PowerShell@2
+    displayName: "Run Pester tests"
+    inputs:
+      targetType: "inline"
+      script: |
+        Set-Location ./tests
+        Invoke-Pester -CI
+      ignoreLASTEXITCODE: true
+
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFormat: "NUnit"
+      testResultsFiles: "**/Test*.xml"
+      failTaskOnFailedTests: true
+      testRunTitle: "Validate Task Files"
+
+  - task: AzureResourceManagerTemplateDeployment@3 # more info: https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/azure-resource-manager-template-deployment-v3?view=azure-pipelines
+    displayName: 'Tutorial 1'
+    inputs:
+      deploymentScope: 'Resource Group'
+      azureResourceManagerConnection: '$(azureServiceConnection)'
+      action: 'Create Or Update Resource Group'
+      resourceGroupName: '$(resourcegroup)'
+      location: '$(location)'
+      templateLocation: 'Linked artifact'
+      csmFile: '$(templateFile)'
+      overrideParameters: ''
+      deploymentMode: 'Incremental'
+      deploymentName: 'Tutorial1'
