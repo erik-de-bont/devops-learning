@@ -1,4 +1,7 @@
 ## StorageaccountTests.Tests.ps1
+
+import-module az.storage
+
 describe 'Check if storageaccount exists' {
 
     $storageaccount = 'subariosstorage12345'
