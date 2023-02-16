@@ -1,5 +1,6 @@
 ## StorageaccountTests.Tests.ps1
 
+install-module az.storage
 import-module az.storage
 
 describe 'Check if storageaccount exists' {
