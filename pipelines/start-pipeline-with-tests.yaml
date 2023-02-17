@@ -17,7 +17,7 @@ variables:
   templateFile: './learning/Tutorial1.bicep'
 
 stages: 
-- stage: 'pre-test'
+- stage: 'pre_test'
   displayName: 'Pre-deployment Tests'
   jobs: 
   - job: PreDeploymentTests
@@ -55,7 +55,7 @@ stages:
 
 
 
-- stage: 'post-test'
+- stage: 'post_test'
   displayName: 'Post-deployment Tests'
   jobs: 
   - job: PostDeploymentTests
