@@ -17,14 +17,14 @@ variables:
   templateFile: './learning/Tutorial1.bicep'
 
 stages: 
-- stage: 'test'
+- stage: 'pre-test'
   displayName: 'Pre-deployment Tests'
   jobs: 
   - job: PreDeploymentTests
     displayName:  'Pre-deployment Tests'
     steps:
     - task: AzurePowerShell@5
-      displayName: "Run Pester tests"
+      displayName: "Run Pre-deployement tests"
       inputs:
         azureSubscription: $(azureServiceConnection)
         ScriptType: "Inlinescript"
@@ -58,3 +58,28 @@ stages:
           overrideParameters: ''
           deploymentMode: 'Incremental'
           deploymentName: 'Tutorial1'
+
+
+
+- stage: 'post-test'
+  displayName: 'Post-deployment Tests'
+  jobs: 
+  - job: PostDeploymentTests
+    displayName:  'Post-deployment Tests'
+    steps:
+    - task: AzurePowerShell@5
+      displayName: "Run Post-deployement tests"
+      inputs:
+        azureSubscription: $(azureServiceConnection)
+        ScriptType: "Inlinescript"
+        Inline: |
+           Set-Location ./post-tests
+           Invoke-Pester -CI
+        azurePowershellVersion: 'LatestVersion'
+
+    - task: PublishTestResults@2
+      inputs:
+          testResultsFormat: "NUnit"
+          testResultsFiles: "**/Test*.xml"
+          failTaskOnFailedTests: true
+          testRunTitle: "Validate Task Files"
