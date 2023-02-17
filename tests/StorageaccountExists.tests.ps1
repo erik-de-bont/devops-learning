@@ -13,7 +13,7 @@ Describe "Test-AzureStorageAccountExists" {
 
     Context "When the Azure Storage Account does not exist" {
         It "Should return False" {
-            $exists = (Get-AzStorageAccount -ResourceGroupName $resourceGroupName -Name "invalidStorageAccountName" -ErrorAction SilentlyContinue)
+            $exists = (Get-AzStorageAccount -ResourceGroupName $resourceGroupName -Name $storageAccountName  -ErrorAction SilentlyContinue)
             $exists.Should.BeNullOrEmpty()
         }
     }
