@@ -1,8 +1,8 @@
 ## StorageaccountTests.Tests.ps1
 
 Describe "Test-AzureStorageAccountExists" {
-    $storageAccountName = "subariosstorage12345"
-    $resourceGroupName = "debont-test-rg"
+    $storageAccountName = "debontdevopspackersa"
+    $resourceGroupName = "debont-devops-rg"
 
     Context "When the Azure Storage Account exists" {
         It "Should return True" {
