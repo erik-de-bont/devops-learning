@@ -1,5 +1,5 @@
 Describe "Azure Resource Group" {
-    $rg = Get-AzResourceGroup -Name $resourceGroupName
+    $rg = (Get-AzResourceGroup -Name $resourceGroupName)
     
 
     Context "Resource Group exists" {
