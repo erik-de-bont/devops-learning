@@ -31,8 +31,8 @@ stages:
         ScriptType: "Inlinescript"
         Inline: |
            Set-Location ./pre-tests
-           Invoke-Pester -CI
-        pwsh: 'true'   
+           Invoke-Pester -CI -Output Detailed
+        pwsh: true   
         azurePowershellVersion: 'LatestVersion'
 
 
