@@ -32,6 +32,7 @@ stages:
         Inline: |
            Set-Location ./pre-tests
            Invoke-Pester -CI
+        pwsh: 'true'   
         azurePowershellVersion: 'LatestVersion'
 
 
@@ -70,6 +71,7 @@ stages:
         Inline: |
            Set-Location ./post-tests
            Invoke-Pester -CI
+        pwsh: 'true'   
         azurePowershellVersion: 'LatestVersion'
 
 #    - task: PublishTestResults@2
