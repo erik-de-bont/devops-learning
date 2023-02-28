@@ -8,7 +8,7 @@ trigger:
 - none
 
 pool:
-  name: 'Host Pool - Linux'
+  name: 'Azure Pipelines'
 
 variables:
   azureServiceConnection: 'Azure DevOps'
