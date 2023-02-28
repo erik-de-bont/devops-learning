@@ -1,10 +1,12 @@
 ## StorageaccountTests.Tests.ps1
 
 Describe "Test if Azure Storage Account does exists" {
-    $storageAccountName = "subariosstorage12345"
-    $resourceGroupName = "debont-test-rg"
+    BeforeAll {
+        $storageAccountName = "subariosstorage12345"
+        $storageAccount = Get-AzStorageAccount -ResourceGroupName $ENV:rgName -StorageAccountName $storageAccountName -ErrorAction SilentlyContinue
+        }
 
-    Context "When the Azure Storage Account does exist" {
+    Context "$StorageAccount" {
         $exists = (Get-AzStorageAccount -ResourceGroupName $resourceGroupName -StorageAccountName $storageAccountName  -ErrorAction SilentlyContinue)    
         It "Should return true" {
             $exists| Should -Not -BeNullOrEmpty
