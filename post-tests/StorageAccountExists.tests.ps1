@@ -1,16 +1,17 @@
-## StorageaccountTests.Tests.ps1
+## StorageaccountExists.Tests.ps1
 
-Describe "Test if Azure Storage Account does exists" {
+Describe "Test if Azure Storage Account does not exist" {
+
     BeforeAll {
-        $storageAccountName = "subariosstorage12345"
-        $storageAccount = Get-AzStorageAccount -ResourceGroupName $ENV:rgName -StorageAccountName $storageAccountName -ErrorAction SilentlyContinue
-        }
+    $storageAccountName = "subariosstorage12345"
+    $storageAccount = Get-AzStorageAccount -ResourceGroupName $ENV:rgName -StorageAccountName $storageAccountName -ErrorAction SilentlyContinue
+    }
 
-    Context "$StorageAccount" {
-        $exists = (Get-AzStorageAccount -ResourceGroupName $resourceGroupName -StorageAccountName $storageAccountName  -ErrorAction SilentlyContinue)    
-        It "Should return true" {
-            $exists| Should -Not -BeNullOrEmpty
+    Context "Check if storageaccount $storageAccount has been provision succesfully" {
 
-        }
+        It "should be provisioned successfully" {
+            $storageAccount.ProvisioningState | Should -Be "Succeeded"
+        }  
+
     }
 }

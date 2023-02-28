@@ -10,7 +10,7 @@ Describe "Test if Azure Storage Account does not exist" {
     Context "Check if storageaccount $storageAccount has been provision succesfully" {
 
         It "should be provisioned successfully" {
-            $storageAccount.ProvisioningState | Should -Be "Succeeded"
+            $storageAccount | Should -BeNullOrEmpty
         }  
 
     }
