@@ -12,8 +12,9 @@ pool:
 
 variables:
   azureServiceConnection: 'Azure DevOps'
-  location: westeurope
-  resourcegroup: debont-test-rg
+  location: 'westeurope'
+  resourceGroupName: 'debont-test-rg'
+  storageAccountName: 'subariosstorage12345'
   templateFile: './learning/Tutorial1.bicep'
 
 stages: 
@@ -45,7 +46,7 @@ stages:
           deploymentScope: 'Resource Group'
           azureResourceManagerConnection: '$(azureServiceConnection)'
           action: 'Create Or Update Resource Group'
-          resourceGroupName: '$(resourcegroup)'
+          resourceGroupName: '$(resourcegroupName)'
           location: '$(location)'
           templateLocation: 'Linked artifact'
           csmFile: '$(templateFile)'
