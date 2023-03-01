@@ -24,30 +24,28 @@ stages:
   - job: PreDeploymentTests
     displayName:  'Pre-deployment Tests'
     steps:
-      - checkout: self
-        persistCredentials: 'true'
+    - checkout: self
+    - task: AzurePowerShell@5
+      displayName: "Run Pre-deployment tests"
+      inputs:
+        azureSubscription: $(azureServiceConnection)
+        ScriptType: "Inlinescript"
+        Inline: |
+           Set-Location ./pre-tests
+           Invoke-Pester -CI -Output Detailed
+        pwsh: 'true'   
+        azurePowershellVersion: 'LatestVersion'
+        errorActionPreference: "continue"
 
-      - task: AzurePowerShell@5
-        inputs:        
-          azureSubscription: $(azureServiceConnection)
-          ScriptType: "Inlinescript"
-          Inline: |
-            Set-Location ./pre-tests
-            Invoke-Pester -CI -Output Detailed 
-          pwsh: 'true'
-          azurePowershellVersion: 'LatestVersion'
-          errorActionPreference: 'continue'
-
-
-      - task: PublishTestResults@2
-        inputs:
+    - task: PublishTestResults@2
+      displayName: "Publish Pre-deployment Test Results"
+      condition: in(variables['Agent.JobStatus'], 'Succeeded', 'SucceededWithIssues', 'Failed')
+      inputs:
           testRunner: "NUnit"
           testResultsFormat: "NUnit"
           testResultsFiles: "**/Test*.xml"
-          failTaskOnFailedTests: true
+          failTaskOnFailedTests: 'true'
           testRunTitle: "Validate Task Files"
-          displayName: "Publish Unit Test Results"
-          condition: in(variables['Agent.JobStatus'], 'Succeeded', 'SucceededWithIssues', 'Failed')
 
 
 - stage: DeployStorageAccount
