@@ -33,7 +33,7 @@ stages:
           ScriptType: "Inlinescript"
           Inline: |
             Set-Location ./post-tests
-            Invoke-Pester -CI -Output Detailed
+            Invoke-Pester -CI -Output Detailed --ResultsPath $(System.DefaultWorkingDirectory)\Publish -Publish'
           pwsh: 'true'
           azurePowershellVersion: 'LatestVersion'
           errorActionPreference: 'continue'
@@ -45,7 +45,7 @@ stages:
           # Make sure the file name matches the file name you specified in the Invoke-Pester.ps1 script.
           # A possibility is to add this as a parameter to the script
           testResultsFiles: "**/TestResults.Pester.xml"
-          testRunTitle: "PS_Win2016_Unit"
+          testRunTitle: "saCreateion_Unit"
           # Make the whole pipeline fail if a test is failed
           failTaskOnFailedTests: true
         displayName: "Publish Unit Test Results"
