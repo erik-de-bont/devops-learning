@@ -70,7 +70,7 @@ stages:
         ScriptType: "Inlinescript"
         Inline: |
            Set-Location ./post-tests
-           Invoke-Pester -CI
+           Invoke-Pester -CI -Output Detailed
         pwsh: 'true'   
         azurePowershellVersion: 'LatestVersion'
 
