@@ -23,35 +23,39 @@ stages:
   jobs: 
   - job: PreDeploymentTests
     displayName:  'Pre-deployment Tests'
-    workspace:
-      clean: all
     steps:
-        - task: PowerShell@2
-          displayName: 'Executing Pester Tests'
-          inputs:
-            filePath: '$(System.DefaultWorkingDirectory)\Pipelines\PowerShell\Pester.ps1'
-            arguments: '-ModulePath $(System.DefaultWorkingDirectory)\pre-tests -ResultsPath $(System.DefaultWorkingDirectory)\Publish -Publish'
-            errorActionPreference: 'silentlyContinue'
-            ignoreLASTEXITCODE: true
+      - checkout: self
+        persistCredentials: 'true'
 
-        - task: PublishCodeCoverageResults@1
-          displayName: 'Publish Code Coverage'
-          inputs:
-            codeCoverageTool: 'JaCoCo'
-            summaryFileLocation: '**/Pester-Coverage.xml'
-            pathToSources: '$(System.DefaultWorkingDirectory)'
-            failIfCoverageEmpty: true
-            additionalCodeCoverageFiles: '$(System.DefaultWorkingDirectory)/**/*.ps*'
+      - task: AzurePowerShell@5
+        inputs:        
+          azureSubscription: $(azureServiceConnection)
+          ScriptType: "Inlinescript"
+          Inline: |
+            Set-Location ./post-tests
+            Invoke-Pester -CI -Output Detailed
+          pwsh: true
+          errorActionPreference: 'continue'
 
-        - task: PublishTestResults@2
-          displayName: 'Publish Pester Tests'
-          inputs:
-            testResultsFormat: 'NUnit'
-            testResultsFiles: '**/Test-Pester.xml'
-            mergeTestResults: true
-            failTaskOnFailedTests: true
+      - task: PublishTestResults@2
+        inputs:
+          # Make sure to use the 'NUnit' test runner
+          testRunner: "NUnit" # !!!
+          # Make sure the file name matches the file name you specified in the Invoke-Pester.ps1 script.
+          # A possibility is to add this as a parameter to the script
+          testResultsFiles: "**/TestResults.Pester.xml"
+          testRunTitle: "PS_Win2016_Unit"
+          # Make the whole pipeline fail if a test is failed
+          failTaskOnFailedTests: true
+        displayName: "Publish Unit Test Results"
+        condition: in(variables['Agent.JobStatus'], 'Succeeded', 'SucceededWithIssues', 'Failed')
 
-
+      - task: PublishCodeCoverageResults@1
+        inputs:
+          summaryFileLocation: "**/CodeCoverage.xml"
+          failIfCoverageEmpty: false
+        displayName: "Publish Unit Test Code Coverage"
+        condition: and(in(variables['Agent.JobStatus'], 'Succeeded', 'SucceededWithIssues', 'Failed'), eq(variables['System.PullRequest.IsFork'], false))
 
 - stage: DeployStorageAccount
   displayName: 'Deploy Storage Account'
@@ -71,8 +75,6 @@ stages:
           overrideParameters: ''
           deploymentMode: 'Incremental'
           deploymentName: 'Tutorial1'
-
-
 
 #- stage: 'post_test'
 #  displayName: 'Post-deployment Tests'
