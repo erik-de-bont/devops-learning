@@ -32,7 +32,7 @@ stages:
           azureSubscription: $(azureServiceConnection)
           ScriptType: "Inlinescript"
           Inline: |
-            Set-Location ./post-tests
+            Set-Location ./pre-tests
             Invoke-Pester -CI -Output Detailed 
           pwsh: 'true'
           azurePowershellVersion: 'LatestVersion'
