@@ -3,12 +3,12 @@
 Describe "Test if Azure Storage Account does not exist" {
 
     BeforeAll {
-    $storageAccount = Get-AzStorageAccount -ResourceGroupName $ENV:resourceGroupName -StorageAccountName $ENV:storageAccountName -ErrorAction SilentlyContinue
+    $storageAccount = Get-AzStorageAccount -ResourceGroupName $env:RESOURCEGROUPNAME -StorageAccountName $env:STORAGEACCOUNTNAME -ErrorAction SilentlyContinue
     }
 
     Context "Check if storageaccount exists" {
 
-        It "$storageAccountName should not exist" {
+        It "$env:STORAGEACCOUNTNAME should not exist" {
             $storageAccount | Should -BeNullOrEmpty
         }  
 

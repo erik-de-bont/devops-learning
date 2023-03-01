@@ -3,10 +3,10 @@
     Describe "Azure Resource Group" {
  
         BeforeAll { 
-            $rg = Get-AzResourceGroup -ResourceGroupName $ENV:resourceGroupName -ErrorAction SilentlyContinue
+            $rg = Get-AzResourceGroup -ResourceGroupName $env:RESOURCEGROUPNAME -ErrorAction SilentlyContinue
         } 
     
-        Context "Check if Resource Group $ENV:resourceGroupName exists" {
+        Context "Check if Resource Group $env:RESOURCEGROUPNAME exists" {
     
             It "should be provisioned successfully" {
                 $rg.ProvisioningState | Should -Be "Succeeded"
