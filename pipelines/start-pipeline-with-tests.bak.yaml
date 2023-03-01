@@ -23,34 +23,17 @@ stages:
   jobs: 
   - job: PreDeploymentTests
     displayName:  'Pre-deployment Tests'
-    workspace:
-      clean: all
     steps:
-        - task: PowerShell@2
-          displayName: 'Executing Pester Tests'
-          inputs:
-            filePath: '$(System.DefaultWorkingDirectory)\Pipelines\PowerShell\Pester.ps1'
-            arguments: '-ModulePath $(System.DefaultWorkingDirectory)\pre-tests -ResultsPath $(System.DefaultWorkingDirectory)\Publish -Publish'
-            errorActionPreference: 'silentlyContinue'
-            ignoreLASTEXITCODE: true
-
-        - task: PublishCodeCoverageResults@1
-          displayName: 'Publish Code Coverage'
-          inputs:
-            codeCoverageTool: 'JaCoCo'
-            summaryFileLocation: '**/Pester-Coverage.xml'
-            pathToSources: '$(System.DefaultWorkingDirectory)'
-            failIfCoverageEmpty: true
-            additionalCodeCoverageFiles: '$(System.DefaultWorkingDirectory)/**/*.ps*'
-
-        - task: PublishTestResults@2
-          displayName: 'Publish Pester Tests'
-          inputs:
-            testResultsFormat: 'NUnit'
-            testResultsFiles: '**/Test-Pester.xml'
-            mergeTestResults: true
-            failTaskOnFailedTests: true
-
+    - task: AzurePowerShell@5
+      displayName: "Run Pre-deployement tests"
+      inputs:
+        azureSubscription: $(azureServiceConnection)
+        ScriptType: "Inlinescript"
+        Inline: |
+           Set-Location ./pre-tests
+           Invoke-Pester -CI -Output Detailed
+        pwsh: true   
+        azurePowershellVersion: 'LatestVersion'
 
 
 - stage: DeployStorageAccount
@@ -74,23 +57,22 @@ stages:
 
 
 
-#- stage: 'post_test'
-#  displayName: 'Post-deployment Tests'
-#  jobs: 
-#  - job: PostDeploymentTests
-#    displayName:  'Post-deployment Tests'
-#    steps:
-#    - task: AzurePowerShell@5
-#      displayName: "Run Post-deployement tests"
-#      inputs:
-#        azureSubscription: $(azureServiceConnection)
-#        ScriptType: "Inlinescript"
-#        Inline: |
-#           Set-Location ./post-tests
-#           Invoke-Pester -CI -Output Detailed
-#        pwsh: 'true'   
-#        azurePowershellVersion: 'LatestVersion'
-
+- stage: 'post_test'
+  displayName: 'Post-deployment Tests'
+  jobs: 
+  - job: PostDeploymentTests
+    displayName:  'Post-deployment Tests'
+    steps:
+    - task: AzurePowerShell@5
+      displayName: "Run Post-deployement tests"
+      inputs:
+        azureSubscription: $(azureServiceConnection)
+        ScriptType: "Inlinescript"
+        Inline: |
+           Set-Location ./post-tests
+           Invoke-Pester -CI -Output Detailed
+        pwsh: 'true'   
+        azurePowershellVersion: 'LatestVersion'
 
 #    - task: PublishTestResults@2
 #      inputs:
