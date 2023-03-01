@@ -67,27 +67,30 @@ stages:
           deploymentMode: 'Incremental'
           deploymentName: 'Tutorial1'
 
-#- stage: 'post_test'
-#  displayName: 'Post-deployment Tests'
-#  jobs: 
-#  - job: PostDeploymentTests
-#    displayName:  'Post-deployment Tests'
-#    steps:
-#    - task: AzurePowerShell@5
-#      displayName: "Run Post-deployement tests"
-#      inputs:
-#        azureSubscription: $(azureServiceConnection)
-#        ScriptType: "Inlinescript"
-#        Inline: |
-#           Set-Location ./post-tests
-#           Invoke-Pester -CI -Output Detailed
-#        pwsh: 'true'   
-#        azurePowershellVersion: 'LatestVersion'
+- stage: 'post_test'
+  displayName: 'Post-deployment Tests'
+  jobs: 
+  - job: PostDeploymentTests
+    displayName:  'Post-deployment Tests'
+    steps:
+    - task: AzurePowerShell@5
+      displayName: "Run Post-deployement tests"
+      inputs:
+        azureSubscription: $(azureServiceConnection)
+        ScriptType: "Inlinescript"
+        Inline: |
+           Set-Location ./post-tests
+           Invoke-Pester -CI -Output Detailed
+        pwsh: 'true'   
+        azurePowershellVersion: 'LatestVersion'
+        errorActionPreference: "continue"
 
-
-#    - task: PublishTestResults@2
-#      inputs:
-#          testResultsFormat: "NUnit"
-#          testResultsFiles: "**/Test*.xml"
-#          failTaskOnFailedTests: true
-#          testRunTitle: "Validate Task Files"
+    - task: PublishTestResults@2
+      displayName: "Publish Post-deployment Test Results"
+      condition: in(variables['Agent.JobStatus'], 'Succeeded', 'SucceededWithIssues', 'Failed')
+      inputs:
+          testRunner: "NUnit"
+          testResultsFormat: "NUnit"
+          testResultsFiles: "**/Test*.xml"
+          failTaskOnFailedTests: 'true'
+          testRunTitle: "Validate Task Files"

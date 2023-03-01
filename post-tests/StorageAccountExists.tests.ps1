@@ -3,7 +3,6 @@
 Describe "Test if Azure Storage Account does not exist" {
 
     BeforeAll {
-    $storageAccountName = "subariosstorage12345"
     $storageAccount = Get-AzStorageAccount -ResourceGroupName $ENV:resourceGroupName -StorageAccountName $ENV:storageAccountName -ErrorAction SilentlyContinue
     }
 
