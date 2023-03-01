@@ -33,10 +33,21 @@ stages:
           ScriptType: "Inlinescript"
           Inline: |
             Set-Location ./post-tests
-            Invoke-Pester -CI -Output Detailed -Publish
+            Invoke-Pester -CI -Output Detailed 
           pwsh: 'true'
           azurePowershellVersion: 'LatestVersion'
           errorActionPreference: 'continue'
+
+
+      - task: PublishTestResults@2
+        inputs:
+          testRunner: "NUnit"
+          testResultsFormat: "NUnit"
+          testResultsFiles: "**/Test*.xml"
+          failTaskOnFailedTests: true
+          testRunTitle: "Validate Task Files"
+          displayName: "Publish Unit Test Results"
+          condition: in(variables['Agent.JobStatus'], 'Succeeded', 'SucceededWithIssues', 'Failed')
 
       - task: PublishTestResults@2
         inputs:
