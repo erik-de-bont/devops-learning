@@ -33,7 +33,7 @@ stages:
           ScriptType: "Inlinescript"
           Inline: |
             Set-Location ./post-tests
-            Invoke-Pester -CI -Output Detailed --ResultsPath $(System.DefaultWorkingDirectory)\publish -Publish
+            Invoke-Pester -CI -Output Detailed -Publish
           pwsh: 'true'
           azurePowershellVersion: 'LatestVersion'
           errorActionPreference: 'continue'
