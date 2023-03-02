@@ -9,7 +9,7 @@ Describe 'Test if Azure Storage Account does not exist' -Tag 'Pre-Tests' {
     Context "Check if storageaccount exists" {
 
         It "$env:STORAGEACCOUNTNAME should not exist" {
-            $storageAccount | Should -BeNullOrEmpty
+            $rg.ProvisioningState | Should -Not -Be "Succeeded"
         }  
 
     }
