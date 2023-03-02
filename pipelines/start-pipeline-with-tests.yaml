@@ -43,7 +43,7 @@ stages:
       inputs:
           testRunner: "NUnit"
           testResultsFormat: "NUnit"
-          testResultsFiles: "TEST*.xml"
+          testResultsFiles: "./Test-*.xml"
           failTaskOnFailedTests: 'true'
           testRunTitle: "Validate Task Files"
 
