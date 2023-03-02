@@ -33,6 +33,7 @@ stages:
         Inline: |
            Set-Location ./pre-tests
            Invoke-Pester -CI -Output Detailed
+           dir *.xml | Write-Host
         pwsh: 'true'   
         azurePowershellVersion: 'LatestVersion'
         errorActionPreference: "continue"
