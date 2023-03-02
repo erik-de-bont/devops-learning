@@ -1,6 +1,6 @@
 #ResourceGroupExist.test.ps1
 
-    Describe "Azure Resource Group" {
+    Describe 'Resource Group' -Tag 'Pre-Tests' {
  
         BeforeAll { 
             $rg = Get-AzResourceGroup -ResourceGroupName $env:RESOURCEGROUPNAME -ErrorAction SilentlyContinue
