@@ -93,6 +93,7 @@ stages:
       inputs:
           testRunner: "NUnit"
           testResultsFormat: "NUnit"
-          testResultsFiles: "**/Test*.xml"
+          testResultsFiles: |
+             $(System.DefaultWorkingDirectory)/**/test*.xml
           failTaskOnFailedTests: 'true'
           testRunTitle: "Validate Task Files"
