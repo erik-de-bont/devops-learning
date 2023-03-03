@@ -32,11 +32,19 @@ stages:
         ScriptType: "Inlinescript"
         Inline: |
            Set-Location ./pre-tests
-           $Results = Invoke-Pester -CI -Output Detailed -PassThru
+           $Results = Invoke-Pester -CI -Output Detailed -PassThru -ResultsPath $(System.DefaultWorkingDirectory)\Publish -Publish'
            write-host $Results | Get-Member | Out-Host
         pwsh: 'true'   
         azurePowershellVersion: 'LatestVersion'
         errorActionPreference: "continue"
+
+    - task: PublishCodeCoverageResults@1
+      displayName: 'Publish Code Coverage'
+      inputs:
+         codeCoverageTool: 'JaCoCo'
+         summaryFileLocation: '**/Pester-Coverage.xml'
+         pathToSources: '$(System.DefaultWorkingDirectory)\Publish'
+         failIfCoverageEmpty: true
 
     - task: PublishTestResults@2
       displayName: "Publish Pre-deployment Test Results"
@@ -48,6 +56,7 @@ stages:
              $(System.DefaultWorkingDirectory)/**/test*.xml
           failTaskOnFailedTests: 'true'
           testRunTitle: "Validate Task Files"
+
 
 - stage: DeployStorageAccount
   displayName: 'Deploy Storage Account'
