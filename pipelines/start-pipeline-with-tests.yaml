@@ -33,6 +33,7 @@ stages:
         Inline: |
            Set-Location ./pre-tests
            $Results = Invoke-Pester -CI -Output Detailed -PassThru
+           write-host $Results
         pwsh: 'true'   
         azurePowershellVersion: 'LatestVersion'
         errorActionPreference: "continue"
