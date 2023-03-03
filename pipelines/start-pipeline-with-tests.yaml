@@ -48,14 +48,6 @@ stages:
           failTaskOnFailedTests: 'true'
           testRunTitle: "Validate Task Files"
 
-    - task: PublishCodeCoverageResults@1
-      inputs:
-        codeCoverageTool: 'JaCoCo'
-        summaryFileLocation: '**/Pester-Coverage.xml'
-        pathToSources: $(System.DefaultWorkingDirectory)
-        failIfCoverageEmpty: true
-
-
 - stage: DeployStorageAccount
   displayName: 'Deploy Storage Account'
   jobs:
@@ -104,9 +96,3 @@ stages:
           failTaskOnFailedTests: 'true'
           testRunTitle: "Validate Task Files"
 
-    - task: PublishCodeCoverageResults@1
-      inputs:
-        codeCoverageTool: 'JaCoCo'
-        summaryFileLocation: '**/Pester-Coverage.xml'
-        pathToSources: $(System.DefaultWorkingDirectory)
-        failIfCoverageEmpty: true
