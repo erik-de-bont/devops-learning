@@ -32,7 +32,7 @@ stages:
         ScriptType: "Inlinescript"
         Inline: |
            Set-Location ./pre-tests
-           $Results = Invoke-Pester -CI -Output Detailed -PassThru -ResultsPath $(System.DefaultWorkingDirectory)\Publish -Publish'
+           $Results = Invoke-Pester -CI -Output Detailed -PassThru -ResultsPath $(System.DefaultWorkingDirectory)\Publish -Publish
            write-host $Results | Get-Member | Out-Host
         pwsh: 'true'   
         azurePowershellVersion: 'LatestVersion'
