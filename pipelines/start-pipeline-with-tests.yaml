@@ -55,7 +55,7 @@ stages:
           codeCoverageTool: 'JaCoCo'
           summaryFileLocation: |
              $(System.DefaultWorkingDirectory)/**/Pester-Coverage.xml
-          pathToSources: '$(System.DefaultWorkingDirectory)\Publish'
+          pathToSources: '$(System.DefaultWorkingDirectory)/Publish'
           failIfCoverageEmpty: true
 
 
