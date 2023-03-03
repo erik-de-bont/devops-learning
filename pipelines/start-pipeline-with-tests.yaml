@@ -74,7 +74,7 @@ stages:
     displayName:  'Post-deployment Tests'
     steps:
     - task: AzurePowerShell@5
-      displayName: "Run Post-deployement tests"
+      displayName: "Run Post-deployment tests"
       inputs:
         azureSubscription: $(azureServiceConnection)
         ScriptType: "Inlinescript"
