@@ -6,9 +6,9 @@ Describe "Test Storage Account" -Tag 'Post-Tests' {
     $storageAccount = Get-AzStorageAccount -ResourceGroupName $env:RESOURCEGROUPNAME -StorageAccountName $env:STORAGEACCOUNTNAME -ErrorAction SilentlyContinue
     }
 
-    Context "Check if storageaccount $env:STORAGEACCOUNTNAME has been provisioned succesfully" {
+    Context "Check if storageaccount has been provisioned succesfully" {
 
-        It "should be provisioned successfully" {
+        It "storage account $env:STORAGEACCOUNTNAMEshould provision state should be 'Succeeded'" {
             $storageAccount.ProvisioningState | Should -Be "Succeeded"
         }  
 
