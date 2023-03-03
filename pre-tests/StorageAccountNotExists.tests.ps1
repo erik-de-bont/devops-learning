@@ -1,6 +1,6 @@
 ## StorageaccountNotExists.Tests.ps1
 
-Describe 'Test if Azure Storage Account does not exist' -Tag 'Pre-Tests' {
+Describe 'Test Storage Account' -Tag 'Pre-Tests' {
 
     BeforeAll {
     $storageAccount = Get-AzStorageAccount -ResourceGroupName $env:RESOURCEGROUPNAME -StorageAccountName $env:STORAGEACCOUNTNAME -ErrorAction SilentlyContinue
