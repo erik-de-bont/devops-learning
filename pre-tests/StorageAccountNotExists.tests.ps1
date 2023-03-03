@@ -8,7 +8,7 @@ Describe 'Test Storage Account' -Tag 'Pre-Tests' {
 
     Context "Check if storageaccount exists" {
 
-        It "$env:STORAGEACCOUNTNAME should not exist" {
+        It "storage account $env:STORAGEACCOUNTNAME should not exist" {
             $storageAccount.ProvisioningState | Should -Not -Be "Succeeded"
         }  
 
