@@ -32,7 +32,7 @@ stages:
         ScriptType: "Inlinescript"
         Inline: |
            Set-Location ./pre-tests
-           Invoke-Pester -CI -Output Detailed
+           $Results = Invoke-Pester -CI -Output Detailed -PassThru
         pwsh: 'true'   
         azurePowershellVersion: 'LatestVersion'
         errorActionPreference: "continue"
