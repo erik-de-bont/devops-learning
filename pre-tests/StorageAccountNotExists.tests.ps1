@@ -6,9 +6,9 @@ Describe 'Test Storage Account' -Tag 'Pre-Tests' {
     $storageAccount = Get-AzStorageAccount -ResourceGroupName $env:RESOURCEGROUPNAME -StorageAccountName $env:STORAGEACCOUNTNAME -ErrorAction SilentlyContinue
     }
 
-    Context "Check if storageaccount exists" {
+    Context "Check if storageaccount $env:STORAGEACCOUNTNAME exists" {
 
-        It "storage account $env:STORAGEACCOUNTNAME should not exist" {
+        It "storage account should not exist" {
             $storageAccount.ProvisioningState | Should -Not -Be "Succeeded"
         }  
 
