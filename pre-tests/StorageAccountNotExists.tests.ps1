@@ -1,6 +1,6 @@
 ## StorageaccountNotExists.Tests.ps1
 
-Describe 'Test Storage Account Tests' -Tag 'Pre-Tests' {
+Describe 'Test Storage Account Tests' -Tags 'Pre-Tests' {
 
     BeforeAll {
     $storageAccount = Get-AzStorageAccount -ResourceGroupName $env:RESOURCEGROUPNAME -StorageAccountName $env:STORAGEACCOUNTNAME -ErrorAction SilentlyContinue
