@@ -1,7 +1,7 @@
 az vmss create \
 --name devopshostpool-image \
 --resource-group debont-devops-rg \
---image UbuntuLTS \
+--image Ubuntu2204 \
 --vm-sku Standard_D4ads_v5 \
 --storage-sku StandardSSD_LRS \
 --authentication-type SSH \
